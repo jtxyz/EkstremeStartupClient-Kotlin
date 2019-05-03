@@ -20,12 +20,12 @@ class QuestionController {
 
     private fun determineAnswer(question: String): String {
         return when {
-            "what is your name" in question -> "Neil"
+            "what is your name" in question -> "MyTeam"
             else -> "I don't know"
         }
     }
 
     fun extractQuestion(text: String): String {
-        return text.substringAfter(':').trim()
+        return text.trim()
     }
 }
