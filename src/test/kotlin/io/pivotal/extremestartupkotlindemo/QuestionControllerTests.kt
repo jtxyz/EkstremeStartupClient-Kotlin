@@ -21,13 +21,12 @@ class QuestionControllerTests {
     lateinit var mock: MockMvc
 
     @Test
-    fun `should respond 'MyTeam' to 'what is your name'`() {
+    fun `should respond 'Jax2019' to 'what is your name'`() {
         mock.perform(
                 get("/").param("q", "what is your name")
         ).andExpect(
-                content().string(equalTo("MyTeam")
+                content().string(equalTo("Jax2019")
                 )
         )
-
     }
 }

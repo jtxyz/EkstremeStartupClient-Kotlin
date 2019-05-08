@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestParam
 class QuestionController {
 
     @GetMapping
-    fun answer(@RequestParam q: String): ResponseEntity<String> {
+    fun respond(@RequestParam q: String): ResponseEntity<String> {
         val question = extractQuestion(q)
-        val answer = determineAnswer(question)
+        val answer = answer(question)
 
         println("Question: \"$question\"; Answer: \"$answer\"")
 
         return ResponseEntity.ok(answer)
     }
 
-    private fun determineAnswer(question: String): String {
+    private fun answer(question: String): String {
         return when {
             "what is your name" in question -> "MyTeam"
             else -> "I don't know"
