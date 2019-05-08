@@ -9,7 +9,7 @@ object Fibonacci {
         var a = 1L
         var b = 1L
 
-        for (i in 2..(number - 1)) {
+        for (i in 2 until number) {
             val newB = a + b
             a = b
             b = newB

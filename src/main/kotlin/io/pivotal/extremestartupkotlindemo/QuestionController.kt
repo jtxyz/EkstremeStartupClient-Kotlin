@@ -14,7 +14,7 @@ fun answer(question: String) =
                         .mapNotNull { (regex, solver) ->
                             regex.matchEntire(question)
                                     ?.groupValues
-                                    ?.run { drop(1) }
+                                    ?.drop(1)
                                     ?.run(solver)
                                     ?.toString()
                         }
