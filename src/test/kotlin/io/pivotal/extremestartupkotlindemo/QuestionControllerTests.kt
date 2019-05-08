@@ -5,6 +5,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
@@ -13,8 +14,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 
 @RunWith(SpringRunner::class)
-@WebMvcTest
-@AutoConfigureWebClient
+@SpringBootTest
+@AutoConfigureMockMvc
 class QuestionControllerTests {
 
     @Autowired
@@ -117,6 +118,19 @@ class QuestionControllerTests {
     }
 
     @Test
+    fun `"what is 82 squared" should return 6724`() {
+        mock.perform(
+                get("/").param(
+                        "q",
+                        "what is 82 squared"
+                )
+        ).andExpect(
+                content().string(equalTo("6724")
+                )
+        )
+    }
+
+    @Test
     fun `"which of the following numbers is both a square and a cube 999, 729, 327, 655, 211" should return 729`() {
         mock.perform(
                 get("/").param(
@@ -170,7 +184,7 @@ class QuestionControllerTests {
         mock.perform(
                 get("/").param(
                         "q",
-                        "what colour is a pattern"
+                        "what colour is a regex"
                 )
         ).andExpect(
                 content().string(equalTo("yellow")
@@ -223,7 +237,7 @@ class QuestionControllerTests {
         mock.perform(
                 get("/").param(
                         "q",
-                        "which of the following is an anagram of listen: enlists, silent, pattern, google"
+                        "which of the following is an anagram of listen: enlists, silent, regex, google"
                 )
         ).andExpect(
                 content().string(equalTo("silent")

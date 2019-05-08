@@ -1,10 +1,12 @@
 package io.pivotal.extremestartupkotlindemo.solvers
 
-object Comparison {
-    val pattern = """which of the following numbers is the (largest|smallest): ((?:\d+)(?:, (?:\d+))+)""".toRegex()
+import org.springframework.stereotype.Component
 
-    fun solve(values: List<String>): Number {
-        val (comparison, allValues) = values
+@Component
+class ComparisonSolver : Solver {
+    override val regex = """which of the following numbers is the (largest|smallest): ((?:\d+)(?:, (?:\d+))+)""".toRegex()
+    override fun solve(groupsValues: List<String>): Number {
+        val (comparison, allValues) = groupsValues
 
         return allValues
                 .split(", ")
@@ -13,7 +15,7 @@ object Comparison {
                     when (comparison) {
                         "largest" -> max()
                         "smallest" -> min()
-                        else -> throw IllegalArgumentException(values[0])
+                        else -> throw IllegalArgumentException(comparison)
                     }
                 }!!
 

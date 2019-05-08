@@ -1,16 +1,16 @@
 package io.pivotal.extremestartupkotlindemo.solvers
 
-object Words {
-    val pattern = """which of the following is an anagram of (\w+): (\w+(:?, \w+)+)""".toRegex()
+import org.springframework.stereotype.Component
 
-    private val sortStuff = { w: String -> w.toCharArray().toList().sorted() }
+@Component
+class WordsSolver : Solver {
+    override val regex = """which of the following is an anagram of (\w+): (\w+(:?, \w+)+)""".toRegex()
 
-    fun solve(values: List<String>): String? {
-        val (word, allCandidates) = values
-
+    private val sortChars = { w: String -> w.toCharArray().toList().sorted() }
+    override fun solve(groupsValues: List<String>): String? {
+        val (word, allCandidates) = groupsValues
         val candidates = allCandidates.split(", ")
-        val map = candidates.associateBy(sortStuff)
-
-        return map[sortStuff(word)]
+        val map = candidates.associateBy(sortChars)
+        return map[sortChars(word)]
     }
 }

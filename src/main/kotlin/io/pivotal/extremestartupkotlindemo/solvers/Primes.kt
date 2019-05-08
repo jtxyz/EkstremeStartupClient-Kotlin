@@ -1,22 +1,26 @@
 package io.pivotal.extremestartupkotlindemo.solvers
 
-object Primes {
-    val pattern = """which of the following numbers is prime: ((?:\d+)(?:, (?:\d+))+)""".toRegex()
+import org.springframework.stereotype.Component
 
-    fun isPrime(it: Int): Boolean {
-        if (it < 2) return true
+@Component
+class PrimesSolver : Solver {
+    companion object {
 
-        for (i in 2 until it) {
-            if (it % i == 0) return false
+        fun isPrime(it: Int): Boolean {
+            if (it < 2) return true
+
+            for (i in 2 until it) {
+                if (it % i == 0) return false
+            }
+
+            return true
         }
-
-        return true
     }
 
-    fun solve(values: List<String>) =
-            values
-                    .first()
-                    .split(", ")
-                    .map { it.toInt() }
-                    .first { isPrime(it) }
+    override val regex = """which of the following numbers is prime: ((?:\d+)(?:, (?:\d+))+)""".toRegex()
+    override fun solve(groupsValues: List<String>) = groupsValues
+            .first()
+            .split(", ")
+            .map { it.toInt() }
+            .first { isPrime(it) }
 }

@@ -1,35 +1,29 @@
 package io.pivotal.extremestartupkotlindemo
 
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
+import io.pivotal.extremestartupkotlindemo.solvers.Solver
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
+@RestController
+class QuestionController(val solvers: List<Solver>) {
 
-fun answer(question: String) =
-        generalKnowledge[question]
-                ?: (mathsKnowledge + wordsKnowledge)
-                        .entries
-                        .asSequence()
-                        .mapNotNull { (regex, solver) ->
-                            regex.matchEntire(question)
-                                    ?.groupValues
-                                    ?.drop(1)
-                                    ?.run(solver)
-                                    ?.toString()
-                        }
-                        .firstOrNull()
-                ?: "I don't know"
-
-@Controller
-class QuestionController {
     @GetMapping
-    fun respond(@RequestParam q: String): ResponseEntity<String> {
+    fun respond(@RequestParam q: String): Any {
         val question = q.trim()
-        val answer = answer(question)
+
+        val answer = solvers
+                .mapNotNull { solver ->
+                    solver.regex.matchEntire(question)
+                            ?.groupValues
+                            ?.drop(1)
+                            ?.run(solver::solve)
+                }
+                .firstOrNull()
+                ?: "I don't know"
 
         println("Question: \"$question\"; Answer: \"$answer\"")
 
-        return ResponseEntity.ok(answer)
+        return answer
     }
 }

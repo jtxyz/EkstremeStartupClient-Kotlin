@@ -1,8 +1,10 @@
 package io.pivotal.extremestartupkotlindemo.solvers
 
+import org.springframework.stereotype.Component
 import java.util.regex.Pattern
 
-object Arithmetic {
+@Component
+class ArithmeticSolver : Solver {
     private val operators = mapOf(
             "plus" to { x: Long, y: Long -> x + y },
             "minus" to { x, y -> x - y },
@@ -11,16 +13,13 @@ object Arithmetic {
     )
 
     private val operatorsPattern = """ (?:${operators.keys.joinToString("|")}) """
-    val pattern = """what is (\d+)((?:${operatorsPattern}(?:\d+))+)""".toRegex()
+    private val operatorPattern = """^$operatorsPattern""".toRegex().toPattern()
+    private val valuePattern = """^\d+""".toRegex().toPattern()
 
-    private val operatorRegex = """^$operatorsPattern""".toRegex()
-    private val valueRegex = """^\d+""".toRegex()
+    override val regex = """what is (\d+)((?:$operatorsPattern(?:\d+))+)""".toRegex()
 
-    private val operatorPattern = operatorRegex.toPattern()
-    private val valuePattern = valueRegex.toPattern()
-
-    fun solve(values: List<String>): Number {
-        val (firstValue, rest) = values
+    override fun solve(groupsValues: List<String>): Number {
+        val (firstValue, rest) = groupsValues
 
         var total = firstValue.toLong()
 

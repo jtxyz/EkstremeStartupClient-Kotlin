@@ -1,10 +1,9 @@
 package io.pivotal.extremestartupkotlindemo
 
+import io.pivotal.extremestartupkotlindemo.solvers.FibonacciSolver.Companion.fibonacciNumber
+import io.pivotal.extremestartupkotlindemo.solvers.PrimesSolver.Companion.isPrime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-
-import io.pivotal.extremestartupkotlindemo.solvers.Primes.isPrime
-import io.pivotal.extremestartupkotlindemo.solvers.Fibonacci.fibonacciNumber
 
 class QuestionTests {
 

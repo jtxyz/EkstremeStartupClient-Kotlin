@@ -1,12 +1,10 @@
 package io.pivotal.extremestartupkotlindemo.solvers
 
+import org.springframework.stereotype.Component
 import java.lang.IllegalArgumentException
 
-object ScrabbleScore {
-
-    val pattern = """what is the english scrabble score of (\w+)""".toRegex()
-
-
+@Component
+class ScrabbleScoreSolver : Solver {
     private val englishScores = mapOf(
             listOf('A', 'E', 'I', 'O', 'U', 'L', 'N', 'S', 'T', 'R') to 1,
             listOf('D', 'G') to 2,
@@ -19,8 +17,9 @@ object ScrabbleScore {
             .flatMap { (k, v) -> k.map { it to v } }
             .toMap()
 
+    override val regex = """what is the english scrabble score of (\w+)""".toRegex()
 
-    fun solve(values: List<String>) = values
+    override fun solve(groupsValues: List<String>) = groupsValues
             .first()
             .toUpperCase()
             .toCharArray()

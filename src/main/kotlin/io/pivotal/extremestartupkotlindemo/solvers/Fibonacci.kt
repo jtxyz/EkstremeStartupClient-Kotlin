@@ -1,27 +1,29 @@
 package io.pivotal.extremestartupkotlindemo.solvers
 
-object Fibonacci {
-    val pattern = """what is the (\d+)(?:st|nd|rd|th) number in the Fibonacci sequence""".toRegex()
+import org.springframework.stereotype.Component
 
-    fun fibonacciNumber(number: Int): Long {
-        if (number < 3) return 1
+@Component
+class FibonacciSolver : Solver {
+    companion object {
+        fun fibonacciNumber(number: Int): Long {
+            if (number < 3) return 1
 
-        var a = 1L
-        var b = 1L
+            var a = 1L
+            var b = 1L
 
-        for (i in 2 until number) {
-            val newB = a + b
-            a = b
-            b = newB
+            for (i in 2 until number) {
+                val newB = a + b
+                a = b
+                b = newB
+            }
+
+            return b
         }
-
-        return b
     }
 
-    fun solve(values: List<String>) =
-            values
-                    .first()
-                    .toInt()
-                    .let { fibonacciNumber(it) }
-
+    override val regex = """what is the (\d+)(?:st|nd|rd|th) number in the Fibonacci sequence""".toRegex()
+    override fun solve(groupsValues: List<String>) = groupsValues
+            .first()
+            .toInt()
+            .let { fibonacciNumber(it) }
 }
