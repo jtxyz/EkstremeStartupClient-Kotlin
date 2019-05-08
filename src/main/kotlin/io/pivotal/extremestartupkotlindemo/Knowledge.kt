@@ -19,5 +19,6 @@ val mathsKnowledge = mapOf(
 )
 
 val wordsKnowledge = mapOf(
-        Words.pattern to Words::solve
+        Words.pattern to Words::solve,
+        ScrabbleScore.pattern to ScrabbleScore::solve
 )

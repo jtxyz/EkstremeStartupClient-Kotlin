@@ -232,6 +232,32 @@ class QuestionControllerTests {
     }
 
     @Test
+    fun `"what is the english scrabble score of ruby" should return 9`() {
+        mock.perform(
+                get("/").param(
+                        "q",
+                        "what is the english scrabble score of ruby\n"
+                )
+        ).andExpect(
+                content().string(equalTo("9")
+                )
+        )
+    }
+
+    @Test
+    fun `"what is the english scrabble score of zoo" should return 9`() {
+        mock.perform(
+                get("/").param(
+                        "q",
+                        "what is the english scrabble score of zoo\n"
+                )
+        ).andExpect(
+                content().string(equalTo("12")
+                )
+        )
+    }
+
+    @Test
     fun `"what is life" should return I don't know`() {
         mock.perform(
                 get("/").param(
