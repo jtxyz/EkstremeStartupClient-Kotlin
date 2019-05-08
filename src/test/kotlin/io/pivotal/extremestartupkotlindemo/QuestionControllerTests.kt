@@ -272,6 +272,19 @@ class QuestionControllerTests {
     }
 
     @Test
+    fun `"what is the sum of the digits in 399479363" should return 53`() {
+        mock.perform(
+                get("/").param(
+                        "q",
+                        "what is the sum of the digits in 399479363\n"
+                )
+        ).andExpect(
+                content().string(equalTo("53")
+                )
+        )
+    }
+
+    @Test
     fun `"what is life" should return I don't know`() {
         mock.perform(
                 get("/").param(
