@@ -3,6 +3,9 @@ package io.pivotal.extremestartupkotlindemo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
+import io.pivotal.extremestartupkotlindemo.solvers.Primes.isPrime
+import io.pivotal.extremestartupkotlindemo.solvers.Fibonacci.fibonacciNumber
+
 class QuestionTests {
 
     @Test

@@ -170,7 +170,7 @@ class QuestionControllerTests {
         mock.perform(
                 get("/").param(
                         "q",
-                        "what colour is a banana"
+                        "what colour is a pattern"
                 )
         ).andExpect(
                 content().string(equalTo("yellow")
@@ -223,7 +223,7 @@ class QuestionControllerTests {
         mock.perform(
                 get("/").param(
                         "q",
-                        "which of the following is an anagram of listen: enlists, silent, banana, google"
+                        "which of the following is an anagram of listen: enlists, silent, pattern, google"
                 )
         ).andExpect(
                 content().string(equalTo("silent")
